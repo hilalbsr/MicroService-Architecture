@@ -5,29 +5,37 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ESourcing.Order.Extensions
 {
+    //Middleware
     public static class ApplicationBuilderExtensions
     {
-        //public static EventBusOrderCreateConsumer Listener { get; set; }
+        //Uygulama ayağa kalktığında start/stop işlemlerine göre çalıştırma.
+        public static EventBusOrderCreateConsumer Listener { get; set; }
 
-        //public static IApplicationBuilder UseRabbitListener(this IApplicationBuilder app)
-        //{
-        //    Listener = app.ApplicationServices.GetService<EventBusOrderCreateConsumer>();
-        //    var life = app.ApplicationServices.GetService<IHostApplicationLifetime>();
+        public static IApplicationBuilder UseRabbitListener(this IApplicationBuilder app)
+        {
+            //constructor üstünden inject etmiyoruz.
+            Listener = app.ApplicationServices.GetService<EventBusOrderCreateConsumer>();
 
-        //    life.ApplicationStarted.Register(OnStarted);
-        //    life.ApplicationStopping.Register(OnStopping);
+            //app ayağa kalktığında çalışması, kapandığında dispose etmesini sağlıcağız. Yani consume etme!
+            var life = app.ApplicationServices.GetService<IHostApplicationLifetime>();
 
-        //    return app;
-        //}
+            life.ApplicationStarted.Register(OnStarted);
+            life.ApplicationStopping.Register(OnStopping);
 
-        //private static void OnStarted()
-        //{
-        //    Listener.Consume();
-        //}
+            return app;
+        }
 
-        //private static void OnStopping()
-        //{
-        //    Listener.Disconnect();
-        //}
+        //Consume etmesi
+        //Servisi dinleyecek
+        private static void OnStarted()
+        {
+            Listener.Consume();
+        }
+
+        //Connection dispose edilmesi
+        private static void OnStopping()
+        {
+            Listener.Disconnect();
+        }
     }
 }

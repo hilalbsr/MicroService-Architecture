@@ -53,7 +53,12 @@ namespace EventBusRabbitMQ.Producer
                 //exclusive: Kuyruğun tek bir connection olmasını sağlıyor. Tek bir consumer burayı connect edebilir. Consumer silindiği connection kapandığında o kutruğun silindiğini belirtiyor. False defaultu
                 //autoDelete:Kuyruk en az 1 consumera sahip ise son subscribe ortadan kalktığında otomatik olarak kuyruk silinecek. En az 1 connectiona sahip olması lazım. 
                 //arguments:Brokera özgğ bazı parametreler içerir.
-                channel.QueueDeclare(queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+                channel.QueueDeclare(queueName, 
+                                     durable: false, 
+                                     exclusive: false, 
+                                     autoDelete: false, 
+                                     arguments: null);
+
                 var message = JsonConvert.SerializeObject(@event);
 
                 //Kuyruğa byte olarak bırakabiliyoruz.

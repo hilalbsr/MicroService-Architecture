@@ -57,11 +57,12 @@ namespace EventBusRabbitMQ
             //RetryPolicy tanımladık. SocketException ve BrokerUnreachableException -> RabbitMQ'nun messageBroker'a erişemediğinde fırlattığı hata mesajları
             //Bu hataları aldığında benim verdiğim koşullarda bekle ve yeniden dene 
             //_retryCount
-            //kaçıncı denemesinde - denemex saniye 1x2 2sn 2x2 4 sn bekle retry denemesi zaman kazandırma
+            //kaçıncı denemesinde - deneme x saniye 1x2 2sn 2x2 4 sn bekle retry denemesi zaman kazandırma
 
             var policy = RetryPolicy.Handle<SocketException>()
                 .Or<BrokerUnreachableException>()
-                .WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                .WaitAndRetry(_retryCount, 
+                retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
                 {
                     _logger.LogWarning(ex, "RabbitMQ Client could not connect after {TimeOut}s ({ExceptionMessage})", $"{time.TotalSeconds:n1}", ex.Message);
                 });

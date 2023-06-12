@@ -30,24 +30,36 @@ namespace ESourcing.Order.Consumers
 
         public void Consume()
         {
+            //rabbitmq connection kontrolü
             if (!_persistentConnection.IsConnected)
             {
                 _persistentConnection.TryConnect();
             }
 
             var channel = _persistentConnection.CreateModel();
-            channel.QueueDeclare(queue: EventBusConstants.OrderCreateQueue, durable: false, exclusive: false, autoDelete: false, arguments: null);
+            channel.QueueDeclare(queue: EventBusConstants.OrderCreateQueue, 
+                                 durable: false, 
+                                 exclusive: false,
+                                 autoDelete: false, 
+                                 arguments: null);
 
             var consumer = new EventingBasicConsumer(channel);
 
+            //custom event metot
             consumer.Received += ReceivedEvent;
 
-            channel.BasicConsume(queue: EventBusConstants.OrderCreateQueue, autoAck: true, consumer: consumer);
+            channel.BasicConsume(queue: EventBusConstants.OrderCreateQueue, 
+                                 autoAck: true, 
+                                 consumer: consumer);
         }
 
+        //Düşen mesajlar için yapılacak işlemler
         private async void ReceivedEvent(object sender, BasicDeliverEventArgs e)
         {
+            //mesaja ulaşıyoruz. e.body.span ile.
             var message = Encoding.UTF8.GetString(e.Body.Span);
+
+            //OrderCreateEvent modeli göndermiştik.
             var @event = JsonConvert.DeserializeObject<OrderCreateEvent>(message);
 
             if(e.RoutingKey == EventBusConstants.OrderCreateQueue)
@@ -55,13 +67,14 @@ namespace ESourcing.Order.Consumers
                 var command = _mapper.Map<OrderCreateCommand>(@event);
 
                 command.CreatedAt = DateTime.Now;
-                command.TotalPrice = @event.Quantity * @event.Price;
+                command.TotalPrice = @event.Quantity * @event.Price; //her bir ürün fiyat * toplam ürün
                 command.UnitPrice = @event.Price;
 
                 var result = await _mediator.Send(command);
             }
         }
 
+        //connection dispose ediyoruz.
         public void Disconnect()
         {
             _persistentConnection.Dispose();

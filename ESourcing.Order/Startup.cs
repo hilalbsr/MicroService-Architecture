@@ -78,6 +78,8 @@ namespace ESourcing.Order
                 return new DefaultRabbitMQPersistentConnection(factory, retryCount, logger);
             });
 
+            //Producer deðil Consumer'ý olacak.
+            //Dependency injection
             services.AddSingleton<EventBusOrderCreateConsumer>();
 
             #endregion
@@ -109,7 +111,8 @@ namespace ESourcing.Order
                 endpoints.MapControllers();
             });
 
-            //app.UseRabbitListener();
+            //custom Middleware 
+            app.UseRabbitListener();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
