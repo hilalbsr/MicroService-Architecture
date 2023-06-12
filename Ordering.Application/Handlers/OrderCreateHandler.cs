@@ -32,8 +32,7 @@ namespace Ordering.Application.Handlers
             var order = await _orderRepository.AddAsync(orderEntity);
 
             var orderResponse = _mapper.Map<OrderResponse>(order);
-
-            s
+            
             return orderResponse;
         }
     }
