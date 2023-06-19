@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "esourcing.order": "StartDebugging",
+        "esourcing.products": "StartDebugging",
+        "esourcing.sourcing": "StartDebugging"
+      }
+    }
+  }
+}

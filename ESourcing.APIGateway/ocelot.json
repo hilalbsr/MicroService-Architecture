@@ -1,17 +1,18 @@
 {
+  //Client ilk önce APIGateway gelecek. Tek giriş kanalı
   "Routes": [
     //Product API
     {
-      "DownstreamPathTemplate": "/api/v1/Product",
+      "DownstreamPathTemplate": "/api/v1/Product", //gelen isteği nereye yönlendiriceğimi söylüyorum
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
+      "DownstreamHostAndPorts": [ //hangi gerçek uygulama
         {
-          "Host": "esourcingproducts",
+          "Host": "esourcingproducts", //docker-compose üzerinde yaml'da esourcingproducts container name
           "Port": "80"
         }
       ],
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
-      "UpstreamPathTemplate": "/Product"
+      "UpstreamPathTemplate": "/Product",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
     },
     {
       "DownstreamPathTemplate": "/api/v1/Product/{id}",

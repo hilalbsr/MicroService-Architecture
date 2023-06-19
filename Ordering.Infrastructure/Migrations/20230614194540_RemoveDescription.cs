@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Ordering.Infrastructure.Migrations
 {
-    public partial class DeleteDescriptionFieldOnOrder : Migration
+    /// <inheritdoc />
+    public partial class RemoveDescription : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
@@ -11,6 +15,7 @@ namespace Ordering.Infrastructure.Migrations
                 table: "Orders");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(

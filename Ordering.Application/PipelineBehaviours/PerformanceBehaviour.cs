@@ -22,17 +22,17 @@ namespace Ordering.Application.PipelineBehaviours
             _logger = logger;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             _timer.Start();
 
-            var response = await next();
+            var response =  next();
 
             _timer.Stop();
 
             var elapsedMilliseconds = _timer.ElapsedMilliseconds;
 
-            if(elapsedMilliseconds > 500)
+            if (elapsedMilliseconds > 500)
             {
                 var requestName = typeof(TRequest).Name;
 

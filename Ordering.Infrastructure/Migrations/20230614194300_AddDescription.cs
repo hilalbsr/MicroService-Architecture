@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Ordering.Infrastructure.Migrations
 {
-    public partial class AddDescriptionFieldOnOrder : Migration
+    /// <inheritdoc />
+    public partial class AddDescription : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
@@ -13,6 +17,7 @@ namespace Ordering.Infrastructure.Migrations
                 nullable: true);
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(

@@ -22,7 +22,7 @@ namespace ESourcing.APIGateway
                 {
                     webBuilder.UseStartup<Startup>();
                 }).ConfigureAppConfiguration((context, config) => {
-                    config.AddJsonFile("ocelot.json");
+                    config.AddJsonFile("ocelot.json"); //Ocelot
                 });
     }
 }

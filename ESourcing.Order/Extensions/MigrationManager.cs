@@ -18,6 +18,8 @@ namespace ESourcing.Order.Extensions
 
                     if(orderContext.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
                     {
+                        //Migration altındaki kodlarımız ile veritabanı değişiklikleri
+                        //update database yapmadan db'yi oluşturdu.
                         orderContext.Database.Migrate();
                     }
 
