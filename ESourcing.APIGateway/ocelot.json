@@ -12,7 +12,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Product",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ] //hangi metotlar için bu /Product ile gelecek onu diyoruz.
     },
     {
       "DownstreamPathTemplate": "/api/v1/Product/{id}",

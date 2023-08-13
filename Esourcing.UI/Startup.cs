@@ -31,6 +31,7 @@ namespace Esourcing.UI
 
             services.AddDbContext<WebAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
+            //IdentityRole
             services.AddIdentity<AppUser, IdentityRole>(opt =>
             {
                 opt.Password.RequiredLength = 4;

@@ -22,11 +22,11 @@ services:
       context: .
       dockerfile: Esourcing.Sourcing/Dockerfile
 
-  #esourcing.apigateway:
-  #  image: ${DOCKER_REGISTRY-}esourcingapigateway
-  #  build:
-  #    context: .
-  #    dockerfile: ESourcing.APIGateway/Dockerfile
+  esourcing.apigateway:
+    image: ${DOCKER_REGISTRY-}esourcingapigateway
+    build:
+      context: .
+      dockerfile: ESourcing.APIGateway/Dockerfile
 
 
   esourcing.order:
